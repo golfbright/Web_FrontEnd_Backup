@@ -1,0 +1,70 @@
+<div  *ngIf="accept" class="col-lg-flex">
+  <nb-card>
+    <nb-card-header>หน้าจัดการรถขนส่ง</nb-card-header>
+    <nb-card-body>
+      <div>
+        <label for="namePlace" class="label" style="color:red">* (จำเป็น)</label>
+      </div>
+      <label for="vehiclePlate" class="label">ป้ายทะเบียนรถ*</label>
+      <input type="text" [(ngModel)]="apiData.vehiclePlate" required #vehiclePlate="ngModel" nbInput fullWidth
+        placeholder="ป้ายทะเบียนรถ">
+        <div *ngIf="vehiclePlate.invalid && (vehiclePlate.dirty || vehiclePlate.touched)" class="alert">
+          <div *ngIf="vehiclePlate.errors?.['required']" style="color:red">
+            กรุณากรอกป้ายทะเบียนรถ
+          </div>
+        </div>
+      <label for="vehicleType" class="label">ประเภทรถ*</label>
+      <div class="form-row">
+        <nb-card-body>
+          <nb-select [(ngModel)]="apiData.vehicleType" required #vehicleType="ngModel" fullWidth>
+            <nb-option value="รถบรรทุกเล็ก">รถบรรทุกเล็ก</nb-option>
+            <nb-option value="รถบรรทุกกลาง">รถบรรทุกกลาง</nb-option>
+            <nb-option value="รถบรรทุกใหญ่">รถบรรทุกใหญ่</nb-option>
+          </nb-select>
+        </nb-card-body>
+      </div>
+      <div *ngIf="vehicleType.invalid && (vehicleType.dirty || vehicleType.touched)" class="alert">
+        <div *ngIf="vehicleType.errors?.['required']" style="color:red">
+          กรุณาเลือกประเภทรถ
+        </div>
+      </div>
+      <label for="vehicleBrand" class="label">แบรนรถบรรทุก*</label>
+      <div class="form-row">
+        <nb-card-body>
+          <nb-select selected="1" [(ngModel)]="apiData.vehicleBrand" required #vehicleBrand="ngModel"  fullWidth>
+            <nb-option value="Honda">Honda</nb-option>
+            <nb-option value="Toyota">Toyota</nb-option>
+          </nb-select>
+        </nb-card-body>
+      </div>
+      <div *ngIf="vehicleBrand.invalid && (vehicleBrand.dirty || vehicleBrand.touched)" class="alert">
+        <div *ngIf="vehicleBrand.errors?.['required']" style="color:red">
+          กรุณาเลือกแบรนรถบรรทุก
+        </div>
+      </div>
+      <label for="vehicleStatus" class="label">สถานะรถขนส่ง*</label>
+      <div class="form-row">
+        <nb-card-body>
+          <nb-select selected="1" [(ngModel)]="apiData.vehicleStatus"  required #vehicleStatus="ngModel" fullWidth>
+            <nb-option value="Ready">สภาพสมบูรณ์</nb-option>
+            <nb-option value="Not-Ready">สภาพไม่พร้อมใช้งาน</nb-option>
+          </nb-select>
+        </nb-card-body>
+      </div>
+      <div *ngIf="vehicleStatus.invalid && (vehicleStatus.dirty || vehicleStatus.touched)" class="alert">
+        <div *ngIf="vehicleStatus.errors?.['required']" style="color:red">
+          กรุณาเลือกสถานะรถขนส่ง
+        </div>
+      </div>
+      <div style="float: left; width: 130px">
+        <button type="submit" nbButton status="danger" (click)="OnClickCancel()">Cancel</button>
+      </div>
+      <div style="float: right; ">
+        <button type="submit" nbButton status="primary" (click)="OnClickSave()" [disabled]="vehiclePlate.null || vehicleType.errors
+        || vehicleBrand.null || vehicleStatus.errors">Save</button>
+      </div>
+    </nb-card-body>
+  </nb-card>
+</div>
+
+<meta *ngIf="!accept" http-equiv="refresh" content="0; url=/pages/Not-Accept" />

@@ -1,0 +1,98 @@
+<div *ngIf="accept" class="col-lg-flex">
+  <nb-card-header>รายการที่อยู่</nb-card-header>
+  <nb-card>
+    <nb-card-body>
+      <div class="form-row">
+        <label for="namePlace" class="label" style="color:red">* (จำเป็น)</label>
+        <div class="form-group col-md-12">
+          <label for="namePlace" class="label">ชื่อสถานที่*</label>
+          <input type="text" [(ngModel)]="apiData.namePlace" #namePlace="ngModel" required nbInput fullWidth
+            placeholder="ชื่อสถานที่" #namePlaces="ngModel">
+            <div *ngIf="namePlaces.invalid && (namePlaces.dirty || namePlaces.touched)" class="alert">
+              <div *ngIf="namePlaces.errors?.['required']" style="color:red">
+                กรุณากรอกชื่อสถานที่
+              </div>
+            </div>
+        </div>
+        <div class="form-group col-md-6">
+          <label for="Gps" class="label">Gps*</label>
+          <input type="text" [(ngModel)]="apiData.gps" #gpsLat="ngModel" required nbInput fullWidth placeholder="จีพีเอส" #gps="ngModel">
+          <div *ngIf="gps.invalid && (gps.dirty || gps.touched)" class="alert">
+            <div *ngIf="gps.errors?.['required']" style="color:red">
+              กรุณากรอกจีพีเอส
+            </div>
+          </div>
+        </div>
+        <div class="form-group col-md-4">
+          <label for="addressNumber" class="label">เลขที่อยู่*</label>
+          <input type="text" [(ngModel)]="apiData.addressNumber" required nbInput fullWidth
+            placeholder="เลขที่อยู่" #addressNumbers="ngModel">
+            <div *ngIf="addressNumbers.invalid && (addressNumbers.dirty || addressNumbers.touched)" class="alert">
+              <div *ngIf="addressNumbers.errors?.['required']" style="color:red">
+                กรุณากรอกเลขที่อยู่
+              </div>
+            </div>
+        </div>
+        <div class="form-group col-md-4">
+          <label for="district" class="label">แขวง/อำเภอ*</label>
+          <input type="text" [(ngModel)]="apiData.district" required nbInput fullWidth placeholder="อำเภอ" #districts="ngModel">
+          <div *ngIf="districts.invalid && (districts.dirty || districts.touched)" class="alert">
+            <div *ngIf="districts.errors?.['required']" style="color:red">
+              กรุณากรอกแขวง/อำเภอ
+            </div>
+          </div>
+        </div>
+        <div class="form-group col-md-4">
+          <label for="county" class="label">เขต/ตำบล*</label>
+          <input type="text" [(ngModel)]="apiData.country" required nbInput fullWidth
+            placeholder="เขต/ตำบล" #countrys="ngModel">
+            <div *ngIf="countrys.invalid && (countrys.dirty || countrys.touched)" class="alert">
+              <div *ngIf="countrys.errors?.['required']" style="color:red">
+                กรุณากรอกเขต/ตำบล
+              </div>
+            </div>
+        </div>
+        <div class="form-group col-md-4">
+          <label for="street" class="label">ถนน*</label>
+          <input type="text" [(ngModel)]="apiData.street" required nbInput fullWidth placeholder="ถนน" #streets="ngModel">
+          <div *ngIf="streets.invalid && (streets.dirty || streets.touched)" class="alert">
+            <div *ngIf="streets.errors?.['required']" style="color:red">
+              กรุณากรอกถนน
+            </div>
+          </div>
+        </div>
+        <div class="form-group col-md-4">
+          <label for="zipCode" class="label">รหัสไปรษณีย์*</label>
+          <input type="text" [(ngModel)]="apiData.zipCode" required minlength="5" maxlength="5" nbInput fullWidth
+            placeholder="รหัสไปรษณีย์" #zipCodes="ngModel" (keypress)="OnlyNumbersAllowed($event)">
+            <div *ngIf="zipCodes.invalid && (zipCodes.dirty || zipCodes.touched)" class="alert">
+              <div *ngIf="zipCodes.errors?.['required']" style="color:red">
+                กรุณากรอกรหัสไปรษณีย์
+              </div>
+              <div *ngIf="zipCodes.errors?.['minlength']" style="color:red">
+                กรุณากรอกรหัสไปรษณีย์ให้ครบ 5 หลัก
+              </div>
+            </div>
+        </div>
+        <div class="form-group col-md-4">
+          <label for="province" class="label">จังหวัด*</label>
+          <input type="text" [(ngModel)]="apiData.province" required nbInput fullWidth placeholder="จังหวัด" #provinces="ngModel">
+          <div *ngIf="provinces.invalid && (provinces.dirty || provinces.touched)" class="alert">
+            <div *ngIf="provinces.errors?.['required']" style="color:red">
+              กรุณากรอกจังหวัด
+            </div>
+          </div>
+        </div>
+      </div>
+      <div style="float: left; width: 130px">
+        <button type="submit" nbButton status="danger" (click)="OnClickCancel()">Cancel</button>
+      </div>
+      <div style="float: right; ">
+        <button type="submit" nbButton status="primary" (click)="OnClickSave()" [disabled]="namePlaces.null || gps.errors
+        || addressNumbers.null || districts.errors || countrys.errors || streets.errors || zipCodes.errors || provinces.errors">Save</button>
+      </div>
+    </nb-card-body>
+  </nb-card>
+</div>
+
+<meta *ngIf="!accept" http-equiv="refresh" content="0; url=/pages/Not-Accept" />

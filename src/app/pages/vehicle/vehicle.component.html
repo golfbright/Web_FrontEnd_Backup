@@ -1,0 +1,11 @@
+  <nb-card *ngIf="accept">
+      <nb-card-header>
+       รายการรถขนส่ง
+      </nb-card-header>
+      <nb-card-body>
+          <ng2-smart-table [settings]="settings" [source]="source" (create)="routeFormCreate()" (edit)="routeFormEdit($event)" (delete)="onDeleteConfirm($event)">
+         </ng2-smart-table>
+      </nb-card-body>
+    </nb-card>
+
+    <meta *ngIf="!accept" http-equiv="refresh" content="0; url=/pages/Not-Accept" />

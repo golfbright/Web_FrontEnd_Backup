@@ -1,0 +1,113 @@
+<div *ngIf="accept" class="col-lg-flex">
+  <nb-card>
+    <nb-card-header>{{formType}}บัญชีผู้ใช้</nb-card-header>
+    <nb-card-body>
+
+      
+        <label for="empNo" class="label">รหัสพนักงาน</label>
+      <input type="text" id="empNo" (keypress)="OnlyNumbersAllowed($event)" required minlength="10" maxlength="10"
+        [(ngModel)]="apiData.employeeNo" #employeeNo="ngModel" nbInput fullWidth placeholder="รหัสพนักงาน">
+
+      
+
+      <div *ngIf="employeeNo.invalid && (employeeNo.dirty || employeeNo.touched)" class="alert">
+
+        <div *ngIf="employeeNo.errors?.['required']" style="color:red">
+          กรุณากรอกรหัสพนักงาน
+        </div>
+        <div *ngIf="employeeNo.errors?.['minlength']" style="color:red">
+          กรุณากรอกรหัสพนักงานให้ครบ 10 หลัก
+        </div>
+      </div>
+
+      <label for="pass" class="label">รหัสผ่าน</label>
+      <input type="password" id="pass" required minlength="6" maxlength="16" [(ngModel)]="apiData.password" #password="ngModel"
+        nbInput fullWidth placeholder="รหัสผ่าน">
+
+      <div *ngIf="password.invalid && (password.dirty || password.touched)" class="alert">
+
+        <div *ngIf="password.errors?.['required']" style="color:red">
+          กรุณากรอกรหัสผ่าน
+        </div>
+        <div *ngIf="password.errors?.['minlength']" style="color:red">
+          กรุณากรอกรหัสผ่านอย่างน้อย 6 ตัวอักษร
+        </div>
+      </div>
+
+
+
+      <nb-card-header *ngIf="statusCon;">เปลี่ยนสถานะรับงาน :
+        <nb-card-body>
+          <nb-select [(ngModel)]="apiData.status">
+            <nb-option value="Active">Active</nb-option>
+            <nb-option value="Not-Active">Not-Active</nb-option>
+          </nb-select>
+        </nb-card-body>
+      </nb-card-header>
+<div><label for="firstN" class="label">ชื่อจริง-นามสกุล</label></div>
+      
+      <div class="full-name-inputs">
+        <input type="text" id="firstN" maxlength="16" [(ngModel)]="apiData.firstName" nbInput fullWidth placeholder="ชื่อจริง">
+        <input type="text" id="lastN" [(ngModel)]="apiData.lastName" nbInput fullWidth placeholder="นามสกุล">
+      </div>
+
+      <label for="tel" class="label">เบอร์โทรศัพท์มือถือ</label>
+      <input type="text" id="tel" (keypress)="OnlyNumbersAllowed($event)" minlength="10" maxlength="10" [(ngModel)]="apiData.tel" nbInput
+        fullWidth placeholder="เบอร์โทรศัพท์มือถือ" #tel="ngModel">
+
+        <div *ngIf="tel.invalid && (tel.dirty || tel.touched)" class="alert">
+
+      
+          <div *ngIf="tel.errors?.['minlength']" style="color:red">
+            กรุณากรอกเบอร์โทรศัพท์มือถือให้ครบ 10 หลัก
+          </div>
+
+        </div>
+
+        <label for="cardId" class="label">เลขประจำตัวประชาชน</label>
+      <input type="text" id="cardId" (keypress)="OnlyNumbersAllowed($event)"  minlength="13" maxlength="13" [(ngModel)]="apiData.cardId" nbInput
+        fullWidth placeholder="เลขประจำตัวประชาชน" #cardId="ngModel">
+
+        <div *ngIf="cardId.invalid && (cardId.dirty || cardId.touched)" class="alert">
+
+      
+          <div *ngIf="cardId.errors?.['minlength']" style="color:red">
+            กรุณากรอกเลขประจำตัวประชาชนให้ครบ 13 หลัก
+          </div>
+
+        </div>
+
+        <label for="driverL" class="label">เลขที่ใบขับขี</label>
+      <input type="text" id="driverL" (keypress)="OnlyNumbersAllowed($event)"  minlength="8" maxlength="8" [(ngModel)]="apiData.driverLicense" nbInput
+        fullWidth placeholder="เลขที่ใบขับขี" #driverLicense="ngModel">
+
+      <h6>Set Roles</h6>
+      <nb-card-header *ngFor="let role of allRole" class="row">
+        <p-checkbox [label]="role.roleName" [value]="role.id" [(ngModel)]="apiData.roleIds"></p-checkbox>
+      </nb-card-header>
+
+    <div *ngIf="showImgCon;">
+        <nb-card-body>
+          <td><img [src]="showImgPath()" alt="profile picture" style="width:60px; height:60px;"></td>
+        </nb-card-body>
+    </div>
+    <label for="namePlace" class="label" style="color:red">* (ขนาดของรูปภาพไม่เกิน 2 MB) </label>
+      <label for="img">ภาพถ่ายบุคคล :</label>
+      <input type="file" #file id="img" accept="image/*" nbInput fullWidth placeholder="Image Profile">
+
+      <div style="float: left; width: 130px">
+        <button type="submit" nbButton status="danger" (click)="OnClickCancel()">ยกเลิก</button>
+      </div>
+      
+      
+      <div style="float: right; ">
+        
+        <button type="submit" [disabled]="employeeNo.null || employeeNo.errors || password.null || password.errors "  
+        nbButton status="primary" (click)="OnClickSave(file.files) " >บันทึก</button>
+      </div>
+
+    </nb-card-body>
+  </nb-card>
+</div>
+
+<meta *ngIf="!accept" http-equiv="refresh" content="0; url=/pages/Not-Accept" />

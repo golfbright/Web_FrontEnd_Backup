@@ -1,0 +1,12 @@
+<nb-card>
+    <nb-card-header>
+     รายการบทบาทผู้ใช้
+    </nb-card-header>
+  
+    <nb-card-body>
+        <ng2-smart-table [settings]="settings" [source]="source" (create)="routeFormCreate()" (edit)="routeFormEdit($event)" (delete)="onDeleteConfirm($event)">
+        <!-- 
+          (edit)="showDialogEdit($event)" -->
+       </ng2-smart-table>
+    </nb-card-body>
+  </nb-card>

@@ -1,0 +1,194 @@
+<div *ngIf="accept" class="col-lg-flex">
+  <nb-card>
+    <nb-card-header>
+      <h6>รายละเอียดงานขนส่ง</h6>
+    </nb-card-header>
+    <nb-card-body>
+      <div>
+        <label for="namePlace" class="label" style="color:red">* (จำเป็น)</label>
+      </div>
+      <label for="taskStatus" class="label">สถานะงานขนส่ง*</label>
+      <div class="form-row">
+        <nb-card-body>
+          <nb-select  [(ngModel)]="apiData.taskStatus" required #taskStatus="ngModel" fullWidth>
+            <nb-option value="ยังไม่ได้ดำเนินการ">ยังไม่ได้รับการจอง</nb-option>
+            <nb-option value="ได้รับการจอง">ได้รับการจอง</nb-option>
+            <nb-option value="ดำเนินการอยู่">ดำเนินการอยู่</nb-option>
+            <nb-option value="ดำเนินการเสร็จสิ้น">ดำเนินการเสร็จสิ้น</nb-option>
+            <nb-option value="งานมีปัญหา">งานมีปัญหา</nb-option>
+          </nb-select>
+        </nb-card-body>
+      </div>
+      <div *ngIf="taskStatus.invalid && (taskStatus.dirty || taskStatus.touched)" class="alert">
+        <div *ngIf="taskStatus.errors?.['required']" style="color:red">
+          กรุณาเลือกสถานะงานขนส่ง
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label for="taskStartDate" class="label">วันเวลาเริ่มงาน*</label>
+          <input type="datetime-local" nbInput fullWidth [(ngModel)]="apiData.taskStartDate" required #taskStartDate="ngModel">
+          <div *ngIf="taskStartDate.invalid && (taskStartDate.dirty || taskStartDate.touched)" class="alert">
+            <div *ngIf="taskStartDate.errors?.['required']" style="color:red">
+              กรุณาเลือกวันเวลาเริ่มงาน
+            </div>
+          </div>
+        </div>
+        <div class="form-group col-md-6">
+          <label for="taskFinishDate" class="label">วันเวลาจบงาน*</label>
+          <input type="datetime-local" nbInput fullWidth [(ngModel)]="apiData.taskFinishDate" required #taskFinishDate="ngModel">
+          <div *ngIf="taskFinishDate.invalid && (taskFinishDate.dirty || taskFinishDate.touched)" class="alert">
+            <div *ngIf="taskFinishDate.errors?.['required']" style="color:red">
+              กรุณาเลือกวันเวลาจบงาน
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="form-row">
+        <label for="taskFinishDate" class="label">รายละเอียดงานขนส่ง</label>
+        <textarea type="text" rows="5" nbInput fullWidth shape="round" placeholder="รายละเอียดงานขนส่ง" [(ngModel)]="apiData.taskDetail"></textarea>
+      </div>
+
+
+      <div class="col-lg-flex">
+        <nb-card-header>
+          <h6>สถานที่จัดส่ง*</h6>
+        </nb-card-header>
+        <div class="form-group col-md-5">
+          <p-dropdown placeholder="Select" [showClear]="true" [filter]="true" filterBy="namePlace"
+            [options]="addressData" [(ngModel)]="keepaddressData" optionLabel="namePlace"
+            (ngModelChange)="changeCheck()"></p-dropdown>
+        </div>
+        <div class="form-row">
+          <div class="form-group col-md-3">
+            <label for="namePlace" class="label">ชื่อสถานที่จัดส่ง</label>
+            <input type="text" nbInput fullWidth [(ngModel)]="apiData.namePlace" required #namePlace="ngModel">
+            <div *ngIf="namePlace.invalid && (namePlace.dirty || namePlace.touched)" class="alert">
+              <div *ngIf="namePlace.errors?.['required']" style="color:red">
+                กรุณาเลือกจากสถานที่จัดส่งหรือกรอกชื่อสถานที่จัดส่ง
+              </div>
+            </div>
+          </div>
+          <div class="form-group col-md-3">
+            <label for="addressNumber" class="label">หมายเลขที่อยู่</label>
+            <input type="text" nbInput fullWidth [(ngModel)]="apiData.addressNumber" required #addressNumber="ngModel">
+            <div *ngIf="addressNumber.invalid && (addressNumber.dirty || addressNumber.touched)" class="alert">
+              <div *ngIf="addressNumber.errors?.['required']" style="color:red">
+                กรุณาเลือกจากสถานที่จัดส่งหรือกรอกหมายเลขที่อยู่
+              </div>
+            </div>
+          </div>
+          <div class="form-group col-md-3">
+            <label for="district" class="label">อำเภอ/เขต</label>
+            <input type="text" nbInput fullWidth [(ngModel)]="apiData.district" required #district="ngModel">
+            <div *ngIf="district.invalid && (district.dirty || district.touched)" class="alert">
+              <div *ngIf="district.errors?.['required']" style="color:red">
+                กรุณาเลือกจากสถานที่จัดส่งหรือกรอกอำเภอ/เขต
+              </div>
+            </div>
+          </div>
+          <div class="form-group col-md-3">
+            <label for="country" class="label">ตำบล/แขวง</label>
+            <input type="text" nbInput fullWidth [(ngModel)]="apiData.country" required #country="ngModel">
+            <div *ngIf="country.invalid && (country.dirty || country.touched)" class="alert">
+              <div *ngIf="country.errors?.['required']" style="color:red">
+                กรุณาเลือกจากสถานที่จัดส่งหรือกรอกตำบล/แขวง
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group col-md-3">
+            <label for="street" class="label">ถนน</label>
+            <input type="text" nbInput fullWidth [(ngModel)]="apiData.street" required #street="ngModel">
+            <div *ngIf="street.invalid && (street.dirty || street.touched)" class="alert">
+              <div *ngIf="street.errors?.['required']" style="color:red">
+                กรุณาเลือกจากสถานที่จัดส่งหรือกรอกถนน
+              </div>
+            </div>
+          </div>
+          <div class="form-group col-md-3">
+            <label for="zipCode" class="label">รหัสไปรษณีย์</label>
+            <input type="text" nbInput fullWidth [(ngModel)]="apiData.zipCode" required #zipCode="ngModel">
+            <div *ngIf="zipCode.invalid && (zipCode.dirty || zipCode.touched)" class="alert">
+              <div *ngIf="zipCode.errors?.['required']" style="color:red">
+                กรุณาเลือกจากสถานที่จัดส่งหรือกรอกรหัสไปรษณีย์
+              </div>
+            </div>
+            <!-- [disabled]="taskStatus.null || taskStartDate.errors
+        || taskFinishDate.null || namePlace.errors || addressNumber.errors || district.errors || country.errors
+        || street.errors" || zipCode.errors" || street.errors" || street.errors" || street.errors" -->
+          </div>
+          <div class="form-group col-md-3">
+            <label for="province" class="label">จังหวัด</label>
+            <input type="text" nbInput fullWidth [(ngModel)]="apiData.province" required #province="ngModel">
+            <div *ngIf="province.invalid && (province.dirty || province.touched)" class="alert">
+              <div *ngIf="province.errors?.['required']" style="color:red">
+                กรุณาเลือกจากสถานที่จัดส่งหรือกรอกจังหวัด
+              </div>
+            </div>
+            <!-- [disabled]="taskStatus.null || taskStartDate.errors
+        || taskFinishDate.null || namePlace.errors || addressNumber.errors || district.errors || country.errors
+        || street.errors" || zipCode.errors" || province.errors" || street.errors" || street.errors" -->
+          </div>
+        </div>
+      </div>
+
+
+      <div class="col-lg-flex">
+        <nb-card-header>
+          <h6>เลือกรถที่จะขนส่ง*</h6>
+        </nb-card-header>
+        <div class="form-group col-md-5">
+          <p-dropdown placeholder="Select" [showClear]="true" [filter]="true" filterBy="vehiclePlate"
+            [options]="carData" [(ngModel)]="keepCarData" optionLabel="vehiclePlate"
+            (ngModelChange)="changeCar()"></p-dropdown>
+        </div>
+        <div class="form-row">
+          <div class="form-group col-md-3">
+            <label for="vehiclePlate" class="label">ป้านทะเบียน</label>
+            <input type="text" nbInput fullWidth [(ngModel)]="apiData.vehiclePlate" required #vehiclePlate="ngModel">
+            <div *ngIf="vehiclePlate.invalid && (vehiclePlate.dirty || vehiclePlate.touched)" class="alert">
+              <div *ngIf="vehiclePlate.errors?.['required']" style="color:red">
+                กรุณาเลือกจากสถานที่จัดส่งหรือกรอกป้านทะเบียน
+              </div>
+            </div>
+          </div>
+          <div class="form-group col-md-3">
+            <label for="vehicleBrand" class="label">ยี่ห้อรถ</label>
+            <input type="text" nbInput fullWidth [(ngModel)]="apiData.vehicleBrand" required #vehicleBrand="ngModel">
+            <div *ngIf="vehicleBrand.invalid && (vehicleBrand.dirty || vehicleBrand.touched)" class="alert">
+              <div *ngIf="vehicleBrand.errors?.['required']" style="color:red">
+                กรุณาเลือกจากสถานที่จัดส่งหรือกรอกยี่ห้อรถ
+              </div>
+            </div>
+          </div>
+          <div class="form-group col-md-3">
+            <label for="vehicleType" class="label">ขนาดรถ</label>
+            <input type="text" nbInput fullWidth [(ngModel)]="apiData.vehicleType" required #vehicleType="ngModel">
+            <div *ngIf="vehicleType.invalid && (vehicleType.dirty || vehicleType.touched)" class="alert">
+              <div *ngIf="vehicleType.errors?.['required']" style="color:red">
+                กรุณาเลือกจากสถานที่จัดส่งหรือกรอกขนาดรถ
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+
+      <div style="float: left; width: 130px">
+        <button type="submit" nbButton status="danger" (click)="OnClickCancel()">Cancel</button>
+      </div>
+      <div style="float: right;">
+        <button type="submit" nbButton status="primary" (click)="OnClickSave()"
+        [disabled]="taskStatus.null || taskStartDate.errors|| taskFinishDate.null
+        || namePlace.errors || addressNumber.errors|| district.errors || country.errors
+        || street.errors || zipCode.errors|| province.errors || vehiclePlate.errors
+        || vehicleBrand.errors || vehicleType.errors">Save</button>
+      </div>
+    </nb-card-body>
+  </nb-card>
+</div>
+
+<meta *ngIf="!accept" http-equiv="refresh" content="0; url=/pages/Not-Accept" />
